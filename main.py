@@ -8,9 +8,8 @@ def white():
     pins.digital_write_pin(DigitalPin.P16, 1)
 
 def on_button_pressed_a():
-    global passage, wait_light
-    passage = 0
-    wait_light = 1
+    global passage
+    passage = 1
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
 def yello():
@@ -21,16 +20,15 @@ def red():
     pins.digital_write_pin(DigitalPin.P0, 0)
     pins.digital_write_pin(DigitalPin.P1, 0)
     pins.digital_write_pin(DigitalPin.P2, 1)
-wait_light = 0
 passage = 0
-passage = 1
-wait_light = 0
+passage = 0
+wait_light = 1
 
 def on_forever():
     global wait_light, passage
-    if passage == 0:
+    if passage == 1:
         wait_light = 0
-        if pins.analog_read_pin(AnalogPin.P1) == 1:
+        if pins.analog_read_pin(AnalogPin.P0) == 1:
             yello()
             basic.pause(100)
             red()
@@ -49,7 +47,8 @@ def on_forever():
         basic.pause(1000)
         basic.show_number(0)
         basic.clear_screen()
-        passage = 1
+        passage = 0
+        wait_light = 1
     else:
         basic.pause(2000)
         green()
@@ -60,13 +59,13 @@ def on_forever():
 basic.forever(on_forever)
 
 def on_forever2():
-    if wait_light == 0:
-        pins.digital_write_pin(DigitalPin.P8, 0)
+    if wait_light == 1:
+        pins.digital_write_pin(DigitalPin.P8, 1)
     else:
-        wait_line()
+        pins.digital_write_pin(DigitalPin.P8, 0)
 basic.forever(on_forever2)
 
 def on_forever3():
-    if passage == 1:
+    if passage == 0:
         pins.digital_write_pin(DigitalPin.P16, 0)
 basic.forever(on_forever3)

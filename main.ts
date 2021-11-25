@@ -28,7 +28,7 @@ let wait_light = 1
 basic.forever(function () {
     if (passage == 1) {
         wait_light = 0
-        if (pins.analogReadPin(AnalogPin.P1) == 1) {
+        if (pins.analogReadPin(AnalogPin.P0) == 1) {
             yello()
             basic.pause(100)
             red()
